@@ -3,7 +3,7 @@ define(function() {
   'use strict';
 
   /************************************************************
-  @description create, read, delete Cookies
+  @description create, read, erase Cookies
   @see http://www.quirksmode.org/js/cookies.html
   *************************************************************/
   var Cookie = {
@@ -26,9 +26,15 @@ define(function() {
       }
       return null;
     },
-    delete: function(name) {
+    erase: function(name) {
       this.createCookie(name,'',-1);
     }
+  };
+
+  return {
+    create: Cookie.create,
+    read: Cookie.read,
+    erase: Cookie.erase
   };
 
 });
