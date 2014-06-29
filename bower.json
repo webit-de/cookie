@@ -1,0 +1,17 @@
+{
+  "name": "cookie",
+  "main": "cookie.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/markusfalk/cookie",
+  "authors": [
+    "Markus Falk <mail@markus-falk.com>"
+  ],
+  "description": "Script for creating, reading and erasing Cookies",
+  "keywords": [
+    "cookie"
+  ],
+  "ignore": [
+    "*.md"
+  ],
+  "license": "MIT"
+}
