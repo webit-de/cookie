@@ -2,9 +2,10 @@
   "name": "cookie",
   "main": "cookie.js",
   "version": "1.0.0",
-  "homepage": "https://github.com/markusfalk/cookie",
+  "homepage": "https://github.com/webit-de/cookie",
   "authors": [
-    "Markus Falk <mail@markus-falk.com>"
+    "Markus Falk <info@webit.de>",
+    "Rodger Rüdiger <info@webit.de>"
   ],
   "description": "Script for creating, reading and erasing Cookies",
   "keywords": [

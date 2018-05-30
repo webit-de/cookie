@@ -9,5 +9,5 @@ Installation
 ------------
 
 ```shell
-bower install markusfalk/cookie
+bower install webit-de/cookie
 ```
