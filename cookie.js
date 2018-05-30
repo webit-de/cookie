@@ -7,14 +7,23 @@ define(function() {
   @see http://www.quirksmode.org/js/cookies.html
   *************************************************************/
   var Cookie = {
-    create: function(name,value, days) {
+    create: function(name,value, days, domain) {
       var expires = "";
+      var cookie_string = "";
+
       if (days) {
         var date = new Date();
         date.setTime(date.getTime()+(days*24*60*60*1000));
         expires = "; expires="+date.toGMTString();
       }
-      document.cookie = name+"="+value+expires+"; path=/";
+
+      cookie_string = name+"="+value+expires+"; path=/";
+      
+      if (domain) {
+        cookie_string += "; domain=" + domain;
+      }
+
+      document.cookie = cookie_string;
     },
     read: function(name) {
       var nameEQ = name + "=";
