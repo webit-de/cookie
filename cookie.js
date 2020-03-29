@@ -7,9 +7,12 @@ define(function() {
   @see http://www.quirksmode.org/js/cookies.html
   *************************************************************/
   var Cookie = {
-    create: function(name,value, days, domain) {
+    create: function(name,value, days, sameSite, domain) {
       var expires = "";
       var cookie_string = "";
+      var sameSite_settings = '';
+
+      sameSite = sameSite || 'lax';
 
       if (days) {
         var date = new Date();
@@ -18,10 +21,24 @@ define(function() {
       }
 
       cookie_string = name+"="+value+expires+"; path=/";
-      
+
       if (domain) {
         cookie_string += "; domain=" + domain;
       }
+
+      switch (sameSite.toLowerCase()) {
+        case 'none':
+          sameSite_settings = 'SameSite=None; Secure';
+          break;
+        case 'strict':
+          sameSite_settings = 'SameSite=Strict';
+          break;
+        default:
+          sameSite_settings = 'SameSite=Lax';
+          break;
+      }
+
+      cookie_string += "; " + sameSite_settings;
 
       document.cookie = cookie_string;
     },
