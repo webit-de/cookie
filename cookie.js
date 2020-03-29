@@ -65,7 +65,7 @@ define(function() {
      * @public
      */
     erase: function(name) {
-      this.createCookie(name, '', -1);
+      this.create(name,'',-1);
     }
   };
 
