@@ -3,14 +3,17 @@ define(function() {
   'use strict';
 
   /************************************************************
-  @description create, read, erase Cookies
-  @see http://www.quirksmode.org/js/cookies.html
-  *************************************************************/
+   @description create, read, erase Cookies
+   @see http://www.quirksmode.org/js/cookies.html
+   *************************************************************/
   var Cookie = {
     create: function(name, value, days, sameSite, domain) {
       var expires = "";
       var cookie_string = "";
       var sameSite_settings = '';
+      var sameSite_lowercased = sameSite.toLowerCase();
+      var cookie_name = name.trim();
+      var domain_string = domain ? "; domain=" + domain : '';
 
       sameSite = sameSite || 'lax';
 
@@ -20,13 +23,9 @@ define(function() {
         expires = "; expires=" + date.toGMTString();
       }
 
-      cookie_string = name + "=" + value + expires + "; path=/";
+      cookie_string = cookie_name + "=" + value + expires + "; path=/" + domain_string;
 
-      if (domain) {
-        cookie_string += "; domain=" + domain;
-      }
-
-      switch (sameSite.toLowerCase()) {
+      switch (sameSite_lowercased) {
         case 'none':
           sameSite_settings = 'SameSite=None; Secure';
           break;
@@ -38,34 +37,55 @@ define(function() {
           break;
       }
 
+      if (sameSite_lowercased === 'none') {
+        var legacy_cookie_string = cookie_name + "-legacy=" + value + expires + "; path=/" + domain_string + "; Secure";
+
+        document.cookie = legacy_cookie_string;
+      }
+
       cookie_string += "; " + sameSite_settings;
 
       document.cookie = cookie_string;
     },
 
     /**
-     * Read Cookie.
+     * Read Cookie and fall back to the legacy version if the original one wasn't found.
      * @function read
      * @public
+     * @returns {(String|null)} - content of the given cookie or null if it wasn't found
      */
     read: function(name) {
-      var nameEQ = name + "=";
-      var ca = document.cookie.split(';');
-      for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      var name_trimmed = name.trim();
+      var name_eq = name_trimmed + "=";
+      var legacy_name_eq = name_trimmed + "-legacy=";
+      var cookie_array = document.cookie.split(';');
+
+      for(var i = 0; i < cookie_array.length; i++) {
+        var cookie = cookie_array[i];
+
+        while (cookie.charAt(0) === ' ') {
+          cookie = cookie.substring(1, cookie.length);
+        }
+
+        if (cookie.indexOf(name_eq) === 0) {
+          return cookie.substring(name_eq.length, cookie.length);
+        } else if (cookie.indexOf(legacy_name_eq) === 0) {
+          return cookie.substring(legacy_name_eq.length, cookie.length);
+        }
       }
       return null;
     },
 
     /**
-     * Erase cookie.
+     * Erase cookie and its legacy version.
      * @function erase
      * @public
      */
     erase: function(name) {
-      this.create(name,'',-1);
+      var name_trimmed = name.trim();
+
+      this.create(name_trimmed,'',-1);
+      this.create(name_trimmed + '-legacy','',-1); // if it was set as legacy cookie
     }
   };
 
