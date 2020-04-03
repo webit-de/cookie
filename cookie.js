@@ -3,9 +3,9 @@ define(function() {
   'use strict';
 
   /************************************************************
-   @description create, read, erase Cookies
-   @see http://www.quirksmode.org/js/cookies.html
-   *************************************************************/
+  @description create, read, erase Cookies
+  @see http://www.quirksmode.org/js/cookies.html
+  *************************************************************/
   var Cookie = {
     create: function(name, value, days, sameSite, domain) {
       var expires = "";
