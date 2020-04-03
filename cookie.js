@@ -15,7 +15,7 @@ define(function() {
       var cookie_name = name.trim();
       var domain_string = domain ? "; domain=" + domain : '';
 
-      sameSite = sameSite || 'lax';
+      sameSite_lowercased = sameSite_lowercased || 'lax';
 
       if (days) {
         var date = new Date();
