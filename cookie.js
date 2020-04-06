@@ -11,11 +11,9 @@ define(function() {
       var expires = "";
       var cookie_string = "";
       var sameSite_settings = '';
-      var sameSite_lowercased = sameSite.toLowerCase();
+      var sameSite_lowercased = sameSite ? sameSite.toLowerCase() : 'lax';
       var cookie_name = name.trim();
       var domain_string = domain ? "; domain=" + domain : '';
-
-      sameSite_lowercased = sameSite_lowercased || 'lax';
 
       if (days) {
         var date = new Date();
