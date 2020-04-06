@@ -35,15 +35,15 @@ define(function() {
           break;
       }
 
+      cookie_string += "; " + sameSite_settings;
+
+      document.cookie = cookie_string;
+
       if (sameSite_lowercased === 'none') {
         var legacy_cookie_string = cookie_name + "-legacy=" + value + expires + "; path=/" + domain_string + "; Secure";
 
         document.cookie = legacy_cookie_string;
       }
-
-      cookie_string += "; " + sameSite_settings;
-
-      document.cookie = cookie_string;
     },
 
     /**
